@@ -1,14 +1,19 @@
 {
   "name": "react-redux-card-game",
+  "author": {
+    "name": "Vladimir Cirkovic"
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "chance": "^1.0.16",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-loader": "^2.4.5",
+    "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
-    "styled-components": "^3.3.2"
+    "redux": "^4.0.0",
+    "styled-components": "^3.3.2",
+    "styled-loaders-react": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

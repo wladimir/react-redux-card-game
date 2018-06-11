@@ -1,18 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
+import StartScreen from "./containers/StartScreen";
+import GameScreen from "./containers/GameScreen";
+import styled from "styled-components";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+const RootStyle = styled.div`
+  * {
+    font-family: "Lato";
   }
-}
+
+  @media (max-width: 700px) {
+    background: white;
+  }
+`;
+
+const App = () => {
+  return (
+    <RootStyle>
+      <StartScreen />
+      <GameScreen />
+    </RootStyle>
+  );
+};
 
 export default App;

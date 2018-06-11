@@ -1,9 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "./reducers";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
-// wrap global style over App
+const store = createStore(rootReducer);
 
-ReactDOM.render(<App />, document.getElementById("root"));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
+
 registerServiceWorker();
