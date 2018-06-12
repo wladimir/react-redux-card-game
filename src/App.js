@@ -1,25 +1,14 @@
 import React from "react";
 import StartScreen from "./containers/StartScreen";
 import GameScreen from "./containers/GameScreen";
-import styled from "styled-components";
 
-const RootStyle = styled.div`
-  * {
-    font-family: "Lato";
-  }
+import "./assets/styles/App.css";
 
-  @media (max-width: 700px) {
-    background: white;
-  }
-`;
-
-const App = () => {
-  return (
-    <RootStyle>
-      <StartScreen />
-      <GameScreen />
-    </RootStyle>
-  );
-};
+const App = () => (
+  <div>
+    <StartScreen />
+    <GameScreen />
+  </div>
+);
 
 export default App;

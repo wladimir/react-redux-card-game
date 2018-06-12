@@ -1,19 +1,25 @@
 import React from "react";
-import { bool } from "prop-types";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { GAME_STATUS } from "../constants/GameStatus";
+import { Grid, Row, Col } from "react-flexbox-grid";
 
-let GameScreen = ({ started }) => {
-  if (!started) return null;
+let GameScreen = ({ gameStatus }) => {
+  if (gameStatus === GAME_STATUS.NOT_STARTED) return null;
 
-  return <div>game screen</div>;
+  return (
+    <div>
+      <p>xxx</p>
+    </div>
+  );
 };
 
 const mapStateToProps = state => ({
-  started: state.started
+  gameStatus: state.gameStatus
 });
 
 GameScreen.propTypes = {
-  started: bool.isRequired
+  gameStatus: PropTypes.string.isRequired
 };
 
 GameScreen = connect(
