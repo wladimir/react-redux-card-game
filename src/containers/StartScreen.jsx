@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { GAME_STATUS } from "../constants/GameStatus";
 import Button from "../components/Button";
+import Loader from "../components/Loader";
 import { startGame } from "../actions";
 
 let StartScreen = ({ gameStatus, startGame }) => {
@@ -24,7 +25,7 @@ let StartScreen = ({ gameStatus, startGame }) => {
         </div>
       );
     case GAME_STATUS.STARTING:
-      return <div className="loader" />;
+      return <Loader />;
     case GAME_STATUS.STARTED:
     default:
       return null;
