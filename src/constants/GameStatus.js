@@ -1,5 +1,0 @@
-export const GAME_STATUS = {
-  NOT_STARTED: "NOT_STARTED",
-  STARTING: "STARTING",
-  STARTED: "STARTED"
-};

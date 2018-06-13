@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { GAME_STATUS } from "../constants/GameStatus";
+import { GAME_STATUS } from "../constants";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 import { startGame } from "../actions";
+import "../assets/styles/StartScreen.css";
+import "../assets/styles/Loader.css";
 
-let StartScreen = ({ gameStatus, startGame }) => {
-  console.log(gameStatus);
+const StartScreen = ({ gameStatus, startGame }) => {
   switch (gameStatus) {
     case GAME_STATUS.NOT_STARTED:
       return (
@@ -49,9 +50,7 @@ StartScreen.propTypes = {
   startGame: PropTypes.func.isRequired
 };
 
-StartScreen = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(StartScreen);
-
-export default StartScreen;

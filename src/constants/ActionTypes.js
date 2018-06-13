@@ -1,3 +1,0 @@
-export const ACTIONS = {
-  GAME_STARTING: "GAME_STARTING"
-};

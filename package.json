@@ -6,10 +6,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "chance": "^1.0.16",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-flexbox-grid": "^2.1.2",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",

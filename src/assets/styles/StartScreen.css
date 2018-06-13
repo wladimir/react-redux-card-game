@@ -1,0 +1,43 @@
+.intro-text {
+  font-family: "Lobster", sans-serif;
+  margin-bottom: 10%;
+
+  font-size: 72px;
+  background: -webkit-linear-gradient(rgb(230, 255, 1), rgb(173, 156, 1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.select-buttons {
+  display: block;
+}
+
+.button {
+  border: none;
+  color: black;
+  background-color: #c8faca;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 100%;
+  border-radius: 15px / 45px;
+
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+
+  margin-bottom: 15px;
+}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button:hover {
+  background-color: #4caf50;
+  color: white;
+}
