@@ -16,7 +16,8 @@ const Card = ({ image, code, index, onClick }) => {
 
 Card.propTypes = {
   image: PropTypes.string.isRequired,
-  code: PropTypes.number.isRequired,
+  code: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired
 };

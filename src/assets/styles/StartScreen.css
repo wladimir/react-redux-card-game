@@ -1,16 +1,12 @@
 .intro-text {
   font-family: "Lobster", sans-serif;
-  margin-bottom: 10%;
+  margin-bottom: 10px;
 
   font-size: 72px;
   background: -webkit-linear-gradient(rgb(230, 255, 1), rgb(173, 156, 1));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.select-buttons {
-  display: block;
 }
 
 .button {
@@ -40,4 +36,15 @@
 .button:hover {
   background-color: #4caf50;
   color: white;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 667px) {
+  .intro-text {
+    font-size: 25px;
+  }
+
+  .button {
+    margin-bottom: 5px;
+  }
 }

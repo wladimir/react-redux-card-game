@@ -6,23 +6,26 @@ export function startGame(playerCount) {
   return dispatch => {
     dispatch({ type: ACTIONS.GAME_STARTING });
 
-    getCards()
+    axios
+      .get(`${API.URL}deck/new/shuffle/?deck_count=1`)
       .then(res => {
-        const players = [];
-
+        const requests = [];
         for (let playerId = 0; playerId < playerCount; playerId++) {
-          dealCards(res.data.deck_id)
-            .then(res => {
-              players.push(createPlayer(playerId, res));
-
-              if (playerId + 1 === playerCount) {
-                dispatch({ type: ACTIONS.GAME_STARTED, players });
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            });
+          requests.push(`${API.URL}deck/${res.data.deck_id}/draw/?count=10`);
         }
+
+        axios
+          .all(requests.map(req => axios.get(req)))
+          .then(
+            axios.spread(function(...res) {
+              const players = res.map((r, i) => createPlayer(i, r));
+
+              dispatch({ type: ACTIONS.GAME_STARTED, players });
+            })
+          )
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
         console.log(err);
@@ -31,16 +34,19 @@ export function startGame(playerCount) {
 }
 
 function createPlayer(playerId, res) {
+  console.log("creating", playerId);
   const cards = [];
 
   res.data.cards
-    .map(card => {
+    .map((card, i) => {
       return {
         image: card.image,
         code: card.code,
         value: isNaN(card.value)
           ? mapCardValue(card.value)
-          : parseInt(card.value, 10)
+          : parseInt(card.value, 10),
+        index: i,
+        played: false
       };
     })
     .forEach(card => {
@@ -55,12 +61,6 @@ function createPlayer(playerId, res) {
   };
 }
 
-function getCards() {
-  const shuffleDeckUrl = `${API.URL}deck/new/shuffle/?deck_count=1`;
-  return axios.get(shuffleDeckUrl);
-}
-
-function dealCards(deckId) {
-  const drawCardsUrl = `${API.URL}deck/${deckId}/draw/?count=10`;
-  return axios.get(drawCardsUrl);
+export function play(xx) {
+  console.log(xx);
 }

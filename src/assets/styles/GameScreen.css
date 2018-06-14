@@ -1,24 +1,97 @@
 .game-screen {
   margin: 0 auto;
-  height: 40%;
-  width: 40%;
-  border: 35px solid #000;
+}
 
+.played-cards {
+  position: absolute;
+  margin: auto;
+
+  height: 30%;
+  width: 30%;
+}
+
+.player-base {
+  position: absolute;
+  margin: 0 auto;
+  height: 200px;
+}
+
+.p1 {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 800px;
+}
+
+.p2 {
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+}
+
+.p3 {
+  margin-left: auto;
+  margin-right: auto;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 30%;
+}
+
+.p4 {
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+}
+
+.cards {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  height: 280px;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
   align-items: center;
+  padding: 50px 5px 0;
+  width: 70%;
 }
 
-player1 {
+.p1 .cards {
+  width: 100%;
 }
 
-player2 {
+.card {
+  padding: 0px 0;
+  width: 10%;
 }
 
-player3 {
+.card img {
+  width: 80px;
 }
 
-player4 {
+.p1 .card:hover {
+  transform: translateY(-5px);
+  transition: all 0.2s linear;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 667px) {
+  .cards {
+    padding: 5px 5px 0;
+    width: 50%;
+  }
+
+  .player-base {
+    height: 150px;
+  }
+
+  .card img {
+    width: 50px;
+  }
+
+  .p1 {
+    width: 70%;
+  }
 }

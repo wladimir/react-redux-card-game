@@ -5,7 +5,7 @@ const initialState = {
   players: [],
   currentPlayer: 0,
   currentRound: 0,
-  table: []
+  playedCards: []
 };
 
 function rootReducer(state = initialState, action) {
