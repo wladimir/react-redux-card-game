@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import PlayerStats from "./PlayerStats";
 
 class Player extends Component {
   render() {
     return (
       <div className={`player-base p${this.props.id + 1}`}>
-        <div className="stats">stats</div>
+        <PlayerStats name={this.props.name} score={this.props.score} />
         <div className="cards">
           {this.props.cards.filter(card => !card.played)}
         </div>

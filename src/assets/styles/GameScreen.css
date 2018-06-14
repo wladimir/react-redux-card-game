@@ -13,7 +13,7 @@
 .player-base {
   position: absolute;
   margin: 0 auto;
-  height: 200px;
+  height: 250px;
 }
 
 .p1 {
@@ -54,7 +54,7 @@
   flex-wrap: nowrap;
   justify-content: space-evenly;
   align-items: center;
-  padding: 50px 5px 0;
+  padding: 10px 5px 0;
   width: 70%;
 }
 
@@ -76,6 +76,26 @@
   transition: all 0.2s linear;
 }
 
+.stats {
+  padding: 0px 5px 0px;
+  color: white;
+}
+
+.p2 .stats,
+.p3 .stats,
+.p4 .stats {
+  width: 80%;
+}
+
+.player-name {
+  font-family: "Lobster";
+  font-size: 1.5em;
+}
+
+.player-score {
+  font-family: "Trebuchet MS";
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 667px) {
   .cards {
@@ -93,5 +113,9 @@
 
   .p1 {
     width: 70%;
+  }
+
+  .player-name {
+    font-size: 1em;
   }
 }
