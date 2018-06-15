@@ -20,7 +20,17 @@ export function startGame(playerCount) {
             axios.spread(function(...res) {
               const players = res.map((r, i) => createPlayer(i, r));
 
-              dispatch({ type: ACTIONS.GAME_STARTED, players });
+              let cardCounter = 0;
+              players[0].cards.forEach(card => {
+                const image = new Image();
+                image.onload = function() {
+                  cardCounter++;
+                  if (cardCounter === 10) {
+                    dispatch({ type: ACTIONS.GAME_STARTED, players });
+                  }
+                };
+                image.src = card.image;
+              });
             })
           )
           .catch(err => {
@@ -61,6 +71,6 @@ function createPlayer(playerId, res) {
   };
 }
 
-export function play(xx) {
-  console.log(xx);
+export function playCard(i) {
+  console.log("played", i);
 }

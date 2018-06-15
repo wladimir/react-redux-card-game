@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 const Card = ({ image, code, index, onClick }) => {
   const handleClick = () => {
-    console.log("clicked on card ", index);
     onClick(index);
   };
 
