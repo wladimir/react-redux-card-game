@@ -13,6 +13,7 @@ module.exports = {
   parser: "babel-eslint",
   globals: { process: true },
   rules: {
-    "no-console": "off"
+    "no-console": "off",
+    "no-case-declarations": "off"
   }
 };

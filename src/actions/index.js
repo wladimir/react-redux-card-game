@@ -10,9 +10,8 @@ export function startGame(playerCount) {
       .get(`${API.URL}deck/new/shuffle/?deck_count=1`)
       .then(res => {
         const requests = [];
-        for (let playerId = 0; playerId < playerCount; playerId++) {
+        for (let playerId = 0; playerId < playerCount; playerId++)
           requests.push(`${API.URL}deck/${res.data.deck_id}/draw/?count=10`);
-        }
 
         axios
           .all(requests.map(req => axios.get(req)))
@@ -25,9 +24,9 @@ export function startGame(playerCount) {
                 const image = new Image();
                 image.onload = function() {
                   cardCounter++;
-                  if (cardCounter === 10) {
+
+                  if (cardCounter === 10)
                     dispatch({ type: ACTIONS.GAME_STARTED, players });
-                  }
                 };
                 image.src = card.image;
               });
@@ -44,7 +43,6 @@ export function startGame(playerCount) {
 }
 
 function createPlayer(playerId, res) {
-  console.log("creating", playerId);
   const cards = [];
 
   res.data.cards
@@ -71,6 +69,14 @@ function createPlayer(playerId, res) {
   };
 }
 
-export function playCard(i) {
-  console.log("played", i);
+export function playCard(card, playerCount) {
+  return dispatch => {
+    dispatch({ type: ACTIONS.CARD_PLAYED, player: 0, card });
+
+    for (let i = 1; i < playerCount; i++) {
+      dispatch({ type: ACTIONS.CARD_PLAYED, player: i, card });
+    }
+
+    dispatch({ type: ACTIONS.END_TURN });
+  };
 }

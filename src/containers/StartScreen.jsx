@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Button from "../components/Button";
 import { startGame } from "../actions";
+import { withRouter } from "react-router-dom";
 import "../assets/styles/StartScreen.css";
 
 const StartScreen = ({ startGame }) => {
@@ -20,9 +21,7 @@ const StartScreen = ({ startGame }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    startGame: playerCount => {
-      dispatch(startGame(playerCount));
-    }
+    startGame: playerCount => dispatch(startGame(playerCount))
   };
 };
 
@@ -30,7 +29,9 @@ StartScreen.propTypes = {
   startGame: PropTypes.func.isRequired
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(StartScreen);
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(StartScreen)
+);

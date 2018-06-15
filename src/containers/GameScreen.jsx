@@ -7,7 +7,7 @@ import { playCard } from "../actions";
 import cardBg from "../assets/images/card_background.jpg";
 import Loader from "../components/Loader";
 import { GAME_STATUS } from "../constants";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import "../assets/styles/GameScreen.css";
 
 class GameScreen extends Component {
@@ -36,9 +36,8 @@ class GameScreen extends Component {
         ).isRequired
       }).isRequired
     ),
-    currentPlayer: PropTypes.number.isRequired,
-    currentRound: PropTypes.number.isRequired,
     playedCards: PropTypes.array.isRequired,
+
     playCard: PropTypes.func.isRequired
   };
 
@@ -81,7 +80,7 @@ class GameScreen extends Component {
                 ? () => {
                     /*no op*/
                   }
-                : () => playCard(j)
+                : () => this.props.playCard(j, players.length)
             }
           />
         ))}
@@ -115,13 +114,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    playCard: index => {
-      dispatch(playCard(index));
-    }
+    playCard: (card, playerCount) => dispatch(playCard(card, playerCount))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GameScreen);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(GameScreen)
+);
