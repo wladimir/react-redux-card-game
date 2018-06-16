@@ -7,7 +7,9 @@ import { playCard } from "../actions";
 import cardBg from "../assets/images/card_background.jpg";
 import Loader from "../components/Loader";
 import { GAME_STATUS } from "../constants";
-import { Redirect, withRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import WinScreen from "../components/WinScreen";
+import { restartGame } from "../actions";
 import "../assets/styles/GameScreen.css";
 
 class GameScreen extends Component {
@@ -38,7 +40,9 @@ class GameScreen extends Component {
     ),
 
     playedCards: PropTypes.array.isRequired,
-    playCard: PropTypes.func.isRequired
+    playCard: PropTypes.func.isRequired,
+    gameWinners: PropTypes.object.isRequired,
+    restartGame: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -97,6 +101,14 @@ class GameScreen extends Component {
 
     return (
       <div className="game-screen">
+        <div>
+          {Object.keys(this.props.gameWinners).length > 0 && (
+            <WinScreen
+              gameWinners={this.props.gameWinners}
+              onClick={this.props.restartGame}
+            />
+          )}
+        </div>
         <div className="played-cards center">
           <ul>{this.createCards(this.props.playedCards)}</ul>
         </div>
@@ -111,18 +123,18 @@ const mapStateToProps = state => ({
   players: state.players,
   currentPlayer: state.currentPlayer,
   currentRound: state.currentRound,
-  playedCards: state.playedCards
+  playedCards: state.playedCards,
+  gameWinners: state.gameWinners
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    playCard: card => dispatch(playCard(card))
+    playCard: card => dispatch(playCard(card)),
+    restartGame: () => dispatch(restartGame())
   };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(GameScreen)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GameScreen);

@@ -1,0 +1,18 @@
+.winners-header {
+  z-index: 10;
+  font-size: 1.2em;
+  color: gold;
+}
+
+.winners-names {
+  font-size: 1em;
+}
+
+.winners-score {
+  font-size: 1.2em;
+}
+
+.winners .button {
+  background-color: gold;
+  font-size: 1.2em;
+}

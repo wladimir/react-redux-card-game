@@ -61,7 +61,7 @@ function createPlayer(playerId, res) {
 
   return {
     id: playerId,
-    name: playerId === 0 ? "Me" : getName(),
+    name: playerId === 0 ? "me" : getName(),
     score: 0,
     cards
   };
@@ -106,7 +106,7 @@ function playOpponent(state, player, dispatch) {
   if (player + 1 === state.players.length)
     setTimeout(() => {
       dispatch({ type: ACTIONS.END_TURN });
-    }, 3000);
+    }, 2000);
 }
 
 function getDeck() {
@@ -122,4 +122,10 @@ function initRequests(deckId, playerCount) {
 
 function dealCards(requests) {
   return axios.all(requests.map(req => axios.get(req)));
+}
+
+export function restartGame() {
+  return dispatch => {
+    dispatch({ type: ACTIONS.RESTART_GAME });
+  };
 }

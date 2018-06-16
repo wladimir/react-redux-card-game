@@ -5,7 +5,8 @@ const initialState = {
   players: [],
   playedCards: [],
   playAllowed: true,
-  round: 0
+  round: 0,
+  gameWinners: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -31,6 +32,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case ACTIONS.END_TURN:
+      console.log("XXX");
       const maxValueIndex = state.playedCards
         .map(card => card.value)
         .reduce((max, x, i, cards) => (x > cards[max] ? i : max), 0);
@@ -59,19 +61,47 @@ function rootReducer(state = initialState, action) {
         points
       );
 
-      const round = state.round + 1;
-      if (round === NUMBER_OF_CARDS) console.log("<<<", round);
-
-      return {
+      let newState = {
         ...state,
         playedCards: [],
         ...(state.players[winner].score += points),
-        playAllowed: true
+        playAllowed: state.round + 1 < NUMBER_OF_CARDS,
+        round: state.round + 1
       };
+
+      if (state.round + 1 === NUMBER_OF_CARDS) {
+        const gameWinners = getGameWinners(newState);
+        newState = {
+          ...newState,
+          gameWinners
+        };
+      }
+
+      return newState;
+
+    case ACTIONS.RESTART_GAME:
+      return initialState;
 
     default:
       return state;
   }
+}
+
+function getGameWinners(state) {
+  const gameWinners = {};
+
+  const maxPointsIndex = state.players
+    .map(player => player.score)
+    .reduce((max, x, i, players) => (x > players[max] ? i : max), 0);
+
+  const winners = state.players.filter(
+    player => player.score === state.players[maxPointsIndex].score
+  );
+
+  gameWinners.names = winners.map(winner => winner.name);
+  gameWinners.score = state.players[maxPointsIndex].score;
+
+  return gameWinners;
 }
 
 export default rootReducer;

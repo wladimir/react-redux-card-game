@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Button from "../components/Button";
 import { startGame } from "../actions";
-import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../assets/styles/StartScreen.css";
 
 const StartScreen = ({ startGame }) => {
@@ -11,9 +11,15 @@ const StartScreen = ({ startGame }) => {
     <div>
       <div className="center">
         <div className="intro-text">Select number of players</div>
-        <Button text={"2 players"} onClick={() => startGame(2)} />
-        <Button text={"3 players"} onClick={() => startGame(3)} />
-        <Button text={"4 players"} onClick={() => startGame(4)} />
+        <Link to="/game">
+          <Button text={"2 players"} onClick={() => startGame(2)} />
+        </Link>
+        <Link to="/game">
+          <Button text={"3 players"} onClick={() => startGame(3)} />
+        </Link>
+        <Link to="/game">
+          <Button text={"4 players"} onClick={() => startGame(4)} />
+        </Link>
       </div>
     </div>
   );
@@ -29,9 +35,7 @@ StartScreen.propTypes = {
   startGame: PropTypes.func.isRequired
 };
 
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(StartScreen)
-);
+export default connect(
+  null,
+  mapDispatchToProps
+)(StartScreen);
