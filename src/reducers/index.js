@@ -64,7 +64,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         playedCards: [],
         ...(state.players[winner].score += points),
-        playAllowed: state.round + 1 < NUMBER_OF_CARDS,
+        playAllowed: true,
         round: state.round + 1
       };
 
