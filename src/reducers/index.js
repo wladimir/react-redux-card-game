@@ -32,7 +32,6 @@ function rootReducer(state = initialState, action) {
       };
 
     case ACTIONS.END_TURN:
-      console.log("XXX");
       const maxValueIndex = state.playedCards
         .map(card => card.value)
         .reduce((max, x, i, cards) => (x > cards[max] ? i : max), 0);
