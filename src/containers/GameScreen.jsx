@@ -31,7 +31,7 @@ class GameScreen extends Component {
             code: PropTypes.string.isRequired,
             value: PropTypes.number.isRequired,
             index: PropTypes.number.isRequired,
-            played: PropTypes.bool.isRequired
+            isPlayed: PropTypes.bool.isRequired
           })
         ).isRequired
       }).isRequired
@@ -48,16 +48,18 @@ class GameScreen extends Component {
 
   createCards(playedCards) {
     return playedCards.map(card => (
-      <Card
-        key={card.code}
-        image={card.image}
-        code={card.code}
-        value={card.value}
-        index={card.index}
-        onClick={() => {
-          // no op
-        }}
-      />
+      <li key={card.code}>
+        <Card
+          key={card.code}
+          image={card.image}
+          code={card.code}
+          value={card.value}
+          index={card.index}
+          onClick={() => {
+            // no op
+          }}
+        />
+      </li>
     ));
   }
 
@@ -68,7 +70,7 @@ class GameScreen extends Component {
         id={player.id}
         name={player.name}
         score={player.score}
-        cards={player.cards.map((card, j) => (
+        cards={player.cards.filter(card => !card.isPlayed).map(card => (
           <Card
             key={card.code}
             image={i > 0 ? cardBg : card.image}
@@ -78,9 +80,9 @@ class GameScreen extends Component {
             onClick={
               i > 0
                 ? () => {
-                    /*no op*/
+                    // no op
                   }
-                : () => this.props.playCard(j, players.length)
+                : this.props.playCard
             }
           />
         ))}
@@ -114,7 +116,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    playCard: (card, playerCount) => dispatch(playCard(card, playerCount))
+    playCard: card => dispatch(playCard(card))
   };
 };
 

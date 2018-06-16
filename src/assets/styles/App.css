@@ -7,6 +7,10 @@
   font-family: "Lato", sans-serif;
 }
 
+li {
+  list-style: none;
+}
+
 textarea,
 input,
 button {

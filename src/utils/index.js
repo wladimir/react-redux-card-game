@@ -3,7 +3,7 @@ import Chance from "chance";
 const chance = new Chance();
 
 const highCards = {
-  ACE: 11,
+  ACE: 1,
   JACK: 12,
   QUEEN: 13,
   KING: 14

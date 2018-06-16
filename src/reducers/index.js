@@ -3,7 +3,9 @@ import { ACTIONS, GAME_STATUS } from "../constants";
 const initialState = {
   gameStatus: GAME_STATUS.NOT_STARTED,
   players: [],
-  playedCards: []
+  playedCards: [],
+  playAllowed: true,
+  gameEnd: false
 };
 
 function rootReducer(state = initialState, action) {
@@ -28,7 +30,39 @@ function rootReducer(state = initialState, action) {
       };
 
     case ACTIONS.END_TURN:
-      return { ...state };
+      const maxValueIndex = state.playedCards
+        .map(card => card.value)
+        .reduce((max, x, i, cards) => (x > cards[max] ? i : max), 0);
+
+      const winningCards = state.playedCards.filter(
+        card => card.value === state.playedCards[maxValueIndex].value
+      );
+
+      let winner = -1;
+      state.players.forEach((player, index) => {
+        const match = player.cards.find(
+          card => winningCards.indexOf(card) >= 0
+        );
+        if (match) winner = index;
+      });
+
+      const points = state.playedCards
+        .map(card => card.value)
+        .reduce((a, b) => a + b, 0);
+
+      console.log("Winner is:", state.players[winner].name);
+      console.log(
+        "Points awarded:",
+        state.playedCards.map(card => card.value).join("+"),
+        "=",
+        points
+      );
+
+      return {
+        ...state,
+        playedCards: [],
+        ...(state.players[winner].score += points)
+      };
 
     default:
       return state;

@@ -7,9 +7,7 @@ class Player extends Component {
     return (
       <div className={`player-base p${this.props.id + 1}`}>
         <PlayerStats name={this.props.name} score={this.props.score} />
-        <div className="cards">
-          {this.props.cards.filter(card => !card.played)}
-        </div>
+        <div className="cards">{this.props.cards}</div>
       </div>
     );
   }

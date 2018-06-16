@@ -2,12 +2,17 @@
   margin: 0 auto;
 }
 
-.played-cards {
-  position: absolute;
-  margin: auto;
+.played-cards ul {
+  margin: 0 auto;
 
   height: 30%;
   width: 30%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .player-base {
@@ -100,15 +105,16 @@
 @media only screen and (min-device-width: 320px) and (max-device-width: 667px) {
   .cards {
     padding: 5px 5px 0;
-    width: 50%;
+    width: 40%;
   }
 
   .player-base {
-    height: 150px;
+    height: 170px;
   }
 
   .card img {
     width: 50px;
+    height: 60px;
   }
 
   .p1 {
@@ -117,5 +123,17 @@
 
   .player-name {
     font-size: 1em;
+  }
+
+  @media screen and (orientation: landscape) {
+    .played-cards ul {
+      flex-direction: row;
+    }
+  }
+
+  @media screen and (orientation: portrait) {
+    .played-cards ul {
+      flex-direction: column;
+    }
   }
 }
