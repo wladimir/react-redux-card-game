@@ -17,7 +17,7 @@ class GameScreen extends Component {
   };
 
   static propTypes = {
-    gameStatus: PropTypes.string.isRequired,
+    gameStatus: PropTypes.number.isRequired,
 
     players: PropTypes.arrayOf(
       PropTypes.shape({
@@ -36,8 +36,8 @@ class GameScreen extends Component {
         ).isRequired
       }).isRequired
     ),
-    playedCards: PropTypes.array.isRequired,
 
+    playedCards: PropTypes.array.isRequired,
     playCard: PropTypes.func.isRequired
   };
 

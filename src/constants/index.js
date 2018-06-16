@@ -6,13 +6,14 @@ export const ACTIONS = {
   END_GAME: "END_GAME"
 };
 
-export const GAME_STATUS = {
-  NOT_STARTED: "NOT_STARTED",
-  STARTING: "STARTING",
-  STARTED: "STARTED"
-};
+export const GAME_STATUS = Object.freeze({
+  NOT_STARTED: 0,
+  STARTING: 1,
+  STARTED: 2
+});
+
+export const NUMBER_OF_CARDS = 10;
 
 export const API = {
-  URL: "https://deckofcardsapi.com/api/",
-  NUMBER_OF_CARDS: 10
+  URL: "https://deckofcardsapi.com/api/"
 };

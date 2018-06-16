@@ -1,11 +1,11 @@
-import { ACTIONS, GAME_STATUS } from "../constants";
+import { ACTIONS, GAME_STATUS, NUMBER_OF_CARDS } from "../constants";
 
 const initialState = {
   gameStatus: GAME_STATUS.NOT_STARTED,
   players: [],
   playedCards: [],
   playAllowed: true,
-  gameEnd: false
+  round: 0
 };
 
 function rootReducer(state = initialState, action) {
@@ -26,7 +26,8 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         playedCards: [...state.playedCards, state.players[player].cards[card]],
-        ...(state.players[player].cards[card].isPlayed = true)
+        ...(state.players[player].cards[card].isPlayed = true),
+        playAllowed: false
       };
 
     case ACTIONS.END_TURN:
@@ -58,10 +59,14 @@ function rootReducer(state = initialState, action) {
         points
       );
 
+      const round = state.round + 1;
+      if (round === NUMBER_OF_CARDS) console.log("<<<", round);
+
       return {
         ...state,
         playedCards: [],
-        ...(state.players[winner].score += points)
+        ...(state.players[winner].score += points),
+        playAllowed: true
       };
 
     default:

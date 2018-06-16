@@ -1,4 +1,4 @@
-import { ACTIONS, API } from "../constants";
+import { ACTIONS, API, NUMBER_OF_CARDS } from "../constants";
 import axios from "axios";
 import { getName, mapCardValue } from "../utils";
 
@@ -23,7 +23,7 @@ export function startGame(playerCount) {
                   cardCounter++;
 
                   // when all are loaded, dispatch action
-                  if (cardCounter === API.NUMBER_OF_CARDS)
+                  if (cardCounter === NUMBER_OF_CARDS)
                     dispatch({ type: ACTIONS.GAME_STARTED, players });
                 };
                 image.src = card.image;
@@ -116,9 +116,7 @@ function getDeck() {
 function initRequests(deckId, playerCount) {
   const requests = [];
   for (let playerId = 0; playerId < playerCount; playerId++)
-    requests.push(
-      `${API.URL}deck/${deckId}/draw/?count=${API.NUMBER_OF_CARDS}`
-    );
+    requests.push(`${API.URL}deck/${deckId}/draw/?count=${NUMBER_OF_CARDS}`);
   return requests;
 }
 
