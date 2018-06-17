@@ -15,19 +15,18 @@ export function startGame(playerCount) {
             axios.spread(function(...res) {
               const players = res.map((r, i) => createPlayer(i, r));
 
-              let cardCounter = 0;
               // preload images
-              players[0].cards.forEach(card => {
-                const image = new Image();
-                image.onload = function() {
-                  cardCounter++;
-
-                  // when all are loaded, dispatch action
-                  if (cardCounter === NUMBER_OF_CARDS)
-                    dispatch({ type: ACTIONS.GAME_STARTED, players });
-                };
-                image.src = card.image;
-              });
+              players.forEach((player, i) =>
+                player.cards.forEach((card, j) => {
+                  const image = new Image();
+                  image.onload = function() {
+                    // when all are loaded, dispatch action
+                    if (i + 1 === players.length && j + 1 === NUMBER_OF_CARDS)
+                      dispatch({ type: ACTIONS.GAME_STARTED, players });
+                  };
+                  image.src = card.image;
+                })
+              );
             })
           )
           .catch(err => {

@@ -3,7 +3,8 @@ module.exports = {
   plugins: ["react", "jest"],
   env: {
     browser: true,
-    es6: true
+    es6: true,
+    jest: true
   },
   parserOptions: {
     ecmaVersion: 6,
