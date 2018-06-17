@@ -15,5 +15,5 @@ export const GAME_STATUS = Object.freeze({
 export const NUMBER_OF_CARDS = 10;
 
 export const API = {
-  URL: "https://deckofcardsapi.com/api/"
+  URL: "https://deckofcardsapi.com"
 };

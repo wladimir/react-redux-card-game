@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StartScreen should contain title and 3 buttons 1`] = `
+<div>
+  <div
+    className="center"
+  >
+    <div
+      className="intro-text"
+    >
+      Select number of players
+    </div>
+    <a
+      href="/game"
+      onClick={[Function]}
+    >
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        2 players
+      </button>
+    </a>
+    <a
+      href="/game"
+      onClick={[Function]}
+    >
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        3 players
+      </button>
+    </a>
+    <a
+      href="/game"
+      onClick={[Function]}
+    >
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        4 players
+      </button>
+    </a>
+  </div>
+</div>
+`;

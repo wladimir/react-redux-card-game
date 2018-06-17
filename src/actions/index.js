@@ -6,7 +6,7 @@ export function startGame(playerCount) {
   return dispatch => {
     dispatch({ type: ACTIONS.GAME_STARTING });
 
-    getDeck()
+    return getDeck()
       .then(res => {
         const requests = initRequests(res.data.deck_id, playerCount);
 
@@ -15,18 +15,9 @@ export function startGame(playerCount) {
             axios.spread(function(...res) {
               const players = res.map((r, i) => createPlayer(i, r));
 
-              // preload images
-              players.forEach((player, i) =>
-                player.cards.forEach((card, j) => {
-                  const image = new Image();
-                  image.onload = function() {
-                    // when all are loaded, dispatch action
-                    if (i + 1 === players.length && j + 1 === NUMBER_OF_CARDS)
-                      dispatch({ type: ACTIONS.GAME_STARTED, players });
-                  };
-                  image.src = card.image;
-                })
-              );
+              preloadImages(players, function() {
+                dispatch({ type: ACTIONS.GAME_STARTED, players });
+              });
             })
           )
           .catch(err => {
@@ -37,6 +28,20 @@ export function startGame(playerCount) {
         console.log(err);
       });
   };
+}
+
+export function preloadImages(players, callback) {
+  players.forEach((player, i) =>
+    player.cards.forEach((card, j) => {
+      const image = new Image();
+
+      image.onload = function() {
+        if (i + 1 === players.length && j + 1 === NUMBER_OF_CARDS) callback();
+      };
+
+      image.src = card.image;
+    })
+  );
 }
 
 function createPlayer(playerId, res) {
@@ -85,7 +90,7 @@ export function playCard(card) {
 
 // natural looking thinking time between plays
 function getRandomPlaytime(index) {
-  return 500 * Math.floor((Math.random() + 1) * 2) * index;
+  return 300 * Math.floor((Math.random() + 1) * 2) * index;
 }
 
 function playOpponent(state, player, dispatch) {
@@ -109,13 +114,15 @@ function playOpponent(state, player, dispatch) {
 }
 
 function getDeck() {
-  return axios.get(`${API.URL}deck/new/shuffle/?deck_count=1`);
+  return axios.get(`${API.URL}/api/deck/new/shuffle/?deck_count=1`);
 }
 
 function initRequests(deckId, playerCount) {
   const requests = [];
   for (let playerId = 0; playerId < playerCount; playerId++)
-    requests.push(`${API.URL}deck/${deckId}/draw/?count=${NUMBER_OF_CARDS}`);
+    requests.push(
+      `${API.URL}/api/deck/${deckId}/draw/?count=${NUMBER_OF_CARDS}`
+    );
   return requests;
 }
 

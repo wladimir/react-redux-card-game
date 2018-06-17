@@ -1,28 +1,27 @@
 import React from "react";
-import { mount } from "enzyme";
-import Player from "./Player";
+import { configure, shallow } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import Player from "../Player";
+
+configure({ adapter: new Adapter() });
 
 describe("Player", () => {
-  let props;
   let wrapper;
-  const Player = () => {
-    if (!mountedLockScreen) {
-      mountedLockScreen = mount(<Player {...props} />);
-    }
-    return mountedLockScreen;
+
+  const props = {
+    id: 123,
+    name: "John",
+    score: 0,
+    cards: []
   };
 
-  beforeEach(() => {
-    props = {
-      wallpaperPath: undefined,
-      userInfoMessage: undefined,
-      onUnlocked: undefined
-    };
-    mountedLockScreen = undefined;
+  it("renders player stats", () => {
+    wrapper = shallow(<Player {...props} />);
+    expect(wrapper.find("PlayerStats").length).toEqual(1);
   });
 
-  it("always renders a div", () => {
-    const divs = lockScreen().find("div");
-    expect(divs.length).toBeGreaterThan(0);
+  it("renders cards", () => {
+    wrapper = shallow(<Player {...props} />);
+    expect(wrapper.contains(<div className="cards" />)).toBeTruthy();
   });
 });

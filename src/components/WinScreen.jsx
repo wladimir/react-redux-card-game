@@ -7,13 +7,13 @@ import "../assets/styles/WinScreen.css";
 
 const WinScreen = ({ gameWinners, onClick }) => {
   return (
-    <div className="center winners-header">
-      {(gameWinners.names.length > 1 ? "👑 Winners are " : "👑 Winner is ") +
-        gameWinners.names.join(", ") +
-        " with score: " +
-        gameWinners.score}
-      <p className="winner-names" />
-      <p className="winner-score" />
+    <div className="center">
+      <div className="winners">
+        {(gameWinners.names.length > 1 ? "Winners are " : "Winner is ") +
+          gameWinners.names.join(", ") +
+          " with score: " +
+          gameWinners.score}
+      </div>
       <Link to="/">
         <Button text="Restart game" onClick={onClick} />
       </Link>

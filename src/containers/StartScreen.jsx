@@ -6,7 +6,7 @@ import { startGame } from "../actions";
 import { Link } from "react-router-dom";
 import "../assets/styles/StartScreen.css";
 
-const StartScreen = ({ startGame }) => {
+export const StartScreen = ({ startGame }) => {
   return (
     <div>
       <div className="center">
