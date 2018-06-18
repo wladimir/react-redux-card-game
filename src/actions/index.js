@@ -20,19 +20,19 @@ export function startGame(playerCount) {
               });
             })
           )
-          .catch(err => {
-            dispatch({ type: ACTIONS.NOTIFY_NETWORK_ERROR, error: err });
+          .catch(error => {
+            dispatch({ type: ACTIONS.NOTIFY_NETWORK_ERROR, error });
             dispatch({ type: ACTIONS.RESTART_GAME });
           });
       })
-      .catch(err => {
-        dispatch({ type: ACTIONS.NOTIFY_NETWORK_ERROR, error: err });
+      .catch(error => {
+        dispatch({ type: ACTIONS.NOTIFY_NETWORK_ERROR, error });
         dispatch({ type: ACTIONS.RESTART_GAME });
       });
   };
 }
 
-export function preloadImages(players, callback) {
+function preloadImages(players, callback) {
   players.forEach((player, i) =>
     player.cards.forEach((card, j) => {
       const image = new Image();
@@ -139,7 +139,6 @@ export function restartGame() {
 }
 
 export function clearError() {
-  console.log("err");
   return dispatch => {
     dispatch({ type: ACTIONS.CLEAR_NETWORK_ERROR });
   };

@@ -133,26 +133,43 @@ describe("async actions", () => {
     ]
   };
 
-  mockAxios.onGet(`${API.URL}/api/deck/new/shuffle/?deck_count=1`).reply(
-    200,
-    {
-      success: true,
-      deck_id: "066wgqtfi2vy",
-      shuffled: true,
-      remaining: 52
-    },
-    { "Content-type": "application/json" }
-  );
-
-  mockAxios
-    .onGet(`${API.URL}/api/deck/066wgqtfi2vy/draw/?count=10`)
-    .reply(200, apiResponse, { "Content-type": "application/json" });
-
   it("creates GAME_STARTING immediately", () => {
+    mockAxios.onGet(`${API.URL}/api/deck/new/shuffle/?deck_count=1`).reply(
+      200,
+      {
+        success: true,
+        deck_id: "066wgqtfi2vy",
+        shuffled: true,
+        remaining: 52
+      },
+      { "Content-type": "application/json" }
+    );
+
+    mockAxios
+      .onGet(`${API.URL}/api/deck/066wgqtfi2vy/draw/?count=10`)
+      .reply(200, apiResponse, { "Content-type": "application/json" });
+
     return store
       .dispatch(actions.startGame(2))
       .then(() =>
         expect(store.getActions()).toEqual([{ type: ACTIONS.GAME_STARTING }])
       );
+  });
+
+  it("handles network error", () => {
+    mockAxios
+      .onGet(`${API.URL}/api/deck/new/shuffle/?deck_count=1`)
+      .networkError();
+
+    return store.dispatch(actions.startGame(2)).then(() =>
+      expect(store.getActions()).toEqual([
+        { type: ACTIONS.GAME_STARTING },
+        {
+          type: ACTIONS.NOTIFY_NETWORK_ERROR,
+          error: Error("Network Error")
+        },
+        { type: ACTIONS.RESTART_GAME }
+      ])
+    );
   });
 });
