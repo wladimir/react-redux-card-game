@@ -12,7 +12,8 @@ describe("Player", () => {
     id: 123,
     name: "John",
     score: 0,
-    cards: []
+    cards: [],
+    activePlayer: 0
   };
 
   it("renders player stats", () => {
@@ -22,6 +23,6 @@ describe("Player", () => {
 
   it("renders cards", () => {
     wrapper = shallow(<Player {...props} />);
-    expect(wrapper.contains(<div className="cards" />)).toBeTruthy();
+    expect(wrapper.find("PlayerHand").length).toEqual(1);
   });
 });
