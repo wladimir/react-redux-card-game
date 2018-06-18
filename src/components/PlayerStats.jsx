@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const PlayerStats = ({ name, score, highlight }) => {
-  console.log(`player-name ${highlight ? "highlight" : ""}`);
   return (
     <div className="stats">
       <p className={`player-name ${highlight ? "highlight" : ""}`}>{name}</p>

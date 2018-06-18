@@ -34,50 +34,24 @@ function gameReducer(state = initialState, action) {
       };
 
     case ACTIONS.END_TURN:
-      const maxValueIndex = state.playedCards
-        .map(card => card.value)
-        .reduce((max, x, i, cards) => (x > cards[max] ? i : max), 0);
+      const { playedCards, players } = state;
 
-      const winningCards = state.playedCards.filter(
-        card => card.value === state.playedCards[maxValueIndex].value
-      );
-
-      let winner = -1;
-      state.players.forEach((player, index) => {
-        const match = player.cards.find(
-          card => winningCards.indexOf(card) >= 0
-        );
-        if (match) winner = index;
-      });
-
-      const points = state.playedCards
-        .map(card => card.value)
-        .reduce((a, b) => a + b, 0);
-
-      console.log("Winner is:", state.players[winner].name);
-      console.log(
-        "Points awarded:",
-        state.playedCards.map(card => card.value).join("+"),
-        "=",
-        points
-      );
+      const turnResult = getTurnResult(playedCards, players);
 
       let newState = {
         ...state,
         playedCards: [],
-        ...(state.players[winner].score += points),
+        ...(state.players[turnResult.winner].score += turnResult.points),
         playAllowed: true,
         round: state.round + 1,
         activePlayer: 0
       };
 
-      if (state.round + 1 === NUMBER_OF_CARDS) {
-        const gameWinners = getGameWinners(newState);
+      if (newState.round === NUMBER_OF_CARDS)
         newState = {
           ...newState,
-          gameWinners
+          gameWinners: getGameWinners(newState)
         };
-      }
 
       return newState;
 
@@ -89,9 +63,32 @@ function gameReducer(state = initialState, action) {
   }
 }
 
-function getGameWinners(state) {
-  const gameWinners = {};
+function getTurnResult(playedCards, players) {
+  const winningCards = getWinningCards(playedCards);
 
+  let winner = -1;
+  players.forEach((player, index) => {
+    const match = player.cards.find(card => winningCards.indexOf(card) >= 0);
+    if (match) winner = index;
+  });
+
+  return {
+    winner,
+    points: playedCards.map(card => card.value).reduce((a, b) => a + b, 0)
+  };
+}
+
+function getWinningCards(playedCards) {
+  const maxValueIndex = playedCards
+    .map(card => card.value)
+    .reduce((max, x, i, cards) => (x > cards[max] ? i : max), 0);
+
+  return playedCards.filter(
+    card => card.value === playedCards[maxValueIndex].value
+  );
+}
+
+function getGameWinners(state) {
   const maxPointsIndex = state.players
     .map(player => player.score)
     .reduce((max, x, i, players) => (x > players[max] ? i : max), 0);
@@ -100,10 +97,10 @@ function getGameWinners(state) {
     player => player.score === state.players[maxPointsIndex].score
   );
 
-  gameWinners.names = winners.map(winner => winner.name);
-  gameWinners.score = state.players[maxPointsIndex].score;
-
-  return gameWinners;
+  return {
+    names: winners.map(winner => winner.name),
+    score: state.players[maxPointsIndex].score
+  };
 }
 
 export default gameReducer;
