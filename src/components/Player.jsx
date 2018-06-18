@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PlayerStats from "./PlayerStats";
+import PlayerHand from "./PlayerHand";
 
 const Player = ({ id, name, score, cards, activePlayer }) => (
   <div className={`player-base p${id + 1}`}>
     <PlayerStats name={name} score={score} highlight={id === activePlayer} />
-    <div className="cards">{cards}</div>
+    <PlayerHand cards={cards} />
   </div>
 );
 

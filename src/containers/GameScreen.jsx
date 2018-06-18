@@ -9,6 +9,7 @@ import Loader from "../components/Loader";
 import { GAME_STATUS } from "../constants";
 import { Redirect } from "react-router-dom";
 import WinScreen from "../components/WinScreen";
+import PlayedCards from "../components/PlayedCards";
 import "../assets/styles/GameScreen.css";
 
 class GameScreen extends Component {
@@ -106,7 +107,7 @@ class GameScreen extends Component {
       <div className="game-screen">
         <div>{this.renderWinners()}</div>
         <div className="played-cards center">
-          <ul>{this.createCards(this.props.playedCards)}</ul>
+          <PlayedCards cards={this.createCards(this.props.playedCards)} />
         </div>
         <div>{this.createPlayers(this.props.players)}</div>
       </div>
