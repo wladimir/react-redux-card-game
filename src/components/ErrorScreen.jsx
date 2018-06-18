@@ -4,10 +4,12 @@ import Button from "./Button";
 
 import "../assets/styles/ErrorScreen.css";
 
-const ErrorScreen = ({ error, onClick }) => {
+const ErrorScreen = ({ onClick }) => {
   return (
     <div className="center">
-      <p className="error-text">{error}</p>
+      <p className="error-text">
+        {"Network error, please check your internet connection!"}
+      </p>
       <Button text="Try again" onClick={onClick} />
     </div>
   );

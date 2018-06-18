@@ -10,6 +10,7 @@ import { GAME_STATUS } from "../constants";
 import { Redirect } from "react-router-dom";
 import WinScreen from "../components/WinScreen";
 import PlayedCards from "../components/PlayedCards";
+
 import "../assets/styles/GameScreen.css";
 
 class GameScreen extends Component {

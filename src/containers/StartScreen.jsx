@@ -7,9 +7,8 @@ import { Link } from "react-router-dom";
 import ErrorScreen from "../components/ErrorScreen";
 import "../assets/styles/StartScreen.css";
 
-export const StartScreen = ({ startGame, errorText, clearError }) => {
-  if (errorText)
-    return <ErrorScreen error={errorText} onClick={() => clearError()} />;
+export const StartScreen = ({ startGame, error, clearError }) => {
+  if (error) return <ErrorScreen onClick={() => clearError()} />;
 
   return (
     <React.Fragment>
@@ -30,7 +29,7 @@ export const StartScreen = ({ startGame, errorText, clearError }) => {
 };
 
 const mapStateToProps = state => ({
-  errorText: state.errorReducer.error
+  error: state.errorReducer.error
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -40,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
 
 StartScreen.propTypes = {
   startGame: PropTypes.func.isRequired,
-  errorText: PropTypes.string,
+  error: PropTypes.object,
   clearError: PropTypes.func
 };
 

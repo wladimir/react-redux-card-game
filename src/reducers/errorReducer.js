@@ -5,7 +5,7 @@ function errorReducer(state = {}, action) {
     case ACTIONS.NOTIFY_NETWORK_ERROR:
       return {
         ...state,
-        error: "Network error, please check your internet connection!"
+        error: Error("Network Error")
       };
 
     case ACTIONS.CLEAR_NETWORK_ERROR:
