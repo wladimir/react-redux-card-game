@@ -10,7 +10,8 @@ describe("Game reducer", () => {
       playedCards: [],
       playAllowed: true,
       round: 0,
-      gameWinners: {}
+      gameWinners: {},
+      activePlayer: 0
     }
   };
 

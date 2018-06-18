@@ -1,8 +1,6 @@
 import { ACTIONS } from "../constants";
 
-const initialState = { error: null };
-
-function errorReducer(state = initialState, action) {
+function errorReducer(state = {}, action) {
   switch (action.type) {
     case ACTIONS.NOTIFY_NETWORK_ERROR:
       return {
