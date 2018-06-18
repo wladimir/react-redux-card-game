@@ -13,6 +13,10 @@ const Card = ({ image, code, index, onClick }) => {
   );
 };
 
+Card.defaultProps = {
+  onClick: () => {}
+};
+
 Card.propTypes = {
   image: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,

@@ -59,9 +59,6 @@ class GameScreen extends Component {
           code={card.code}
           value={card.value}
           index={card.index}
-          onClick={() => {
-            // no op
-          }}
         />
       </li>
     ));
@@ -75,22 +72,18 @@ class GameScreen extends Component {
         name={player.name}
         score={player.score}
         activePlayer={this.props.activePlayer}
-        cards={player.cards.filter(card => !card.isPlayed).map(card => (
-          <Card
-            key={card.code}
-            image={i > 0 ? cardBg : card.image}
-            code={card.code}
-            value={card.value}
-            index={card.index}
-            onClick={
-              i > 0
-                ? () => {
-                    // no op
-                  }
-                : this.props.playCard
-            }
-          />
-        ))}
+        cards={player.cards
+          .filter(card => !card.isPlayed)
+          .map(card => (
+            <Card
+              key={card.code}
+              image={i > 0 ? cardBg : card.image}
+              code={card.code}
+              value={card.value}
+              index={card.index}
+              onClick={i > 0 ? () => {} : this.props.playCard}
+            />
+          ))}
       />
     ));
   }
