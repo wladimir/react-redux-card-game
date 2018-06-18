@@ -7,8 +7,8 @@ import "../assets/styles/ErrorScreen.css";
 const ErrorScreen = ({ error, onClick }) => {
   return (
     <div className="center">
-      <p className="error-screen">{error}</p>
-      <Button className="button" onClick={onClick} text="Try again" />
+      <p className="error-text">{error}</p>
+      <Button text="Try again" onClick={onClick} />
     </div>
   );
 };

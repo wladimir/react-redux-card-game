@@ -1,3 +1,4 @@
-.error-screen {
-  color: red
+.error-text {
+  color: white;
+  background-color:red;
 }
