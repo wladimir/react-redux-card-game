@@ -119,12 +119,12 @@ class GameScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  gameStatus: state.gameStatus,
-  players: state.players,
-  currentPlayer: state.currentPlayer,
-  currentRound: state.currentRound,
-  playedCards: state.playedCards,
-  gameWinners: state.gameWinners
+  gameStatus: state.gameReducer.gameStatus,
+  players: state.gameReducer.players,
+  currentPlayer: state.gameReducer.currentPlayer,
+  currentRound: state.gameReducer.currentRound,
+  playedCards: state.gameReducer.playedCards,
+  gameWinners: state.gameReducer.gameWinners
 });
 
 const mapDispatchToProps = dispatch => ({

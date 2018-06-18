@@ -21,11 +21,13 @@ export function startGame(playerCount) {
             })
           )
           .catch(err => {
-            console.log(err);
+            dispatch({ type: ACTIONS.NOTIFY_NETWORK_ERROR, error: err });
+            dispatch({ type: ACTIONS.RESTART_GAME });
           });
       })
       .catch(err => {
-        console.log(err);
+        dispatch({ type: ACTIONS.NOTIFY_NETWORK_ERROR, error: err });
+        dispatch({ type: ACTIONS.RESTART_GAME });
       });
   };
 }
@@ -73,28 +75,28 @@ function createPlayer(playerId, res) {
 
 export function playCard(card) {
   return (dispatch, getState) => {
-    const state = getState();
+    const gameState = getState().gameReducer;
 
-    if (!state.playAllowed) return;
+    if (!gameState.playAllowed) return;
 
-    const playerCount = state.players.length;
+    const playerCount = gameState.players.length;
 
     dispatch({ type: ACTIONS.CARD_PLAYED, player: 0, card });
 
     for (let i = 1; i < playerCount; i++)
       setTimeout(() => {
-        playOpponent(state, i, dispatch);
+        playOpponent(gameState, i, dispatch);
       }, getRandomPlaytime(i));
   };
 }
 
 // natural looking thinking time between plays
 function getRandomPlaytime(index) {
-  return 300 * Math.floor((Math.random() + 1) * 2) * index;
+  return 100 * Math.floor((Math.random() + 1) * 2) * index;
 }
 
-function playOpponent(state, player, dispatch) {
-  const unplayedCards = state.players[player].cards.filter(
+function playOpponent(gameState, player, dispatch) {
+  const unplayedCards = gameState.players[player].cards.filter(
     card => !card.isPlayed
   );
 
@@ -107,7 +109,7 @@ function playOpponent(state, player, dispatch) {
     card: randomCard.index
   });
 
-  if (player + 1 === state.players.length)
+  if (player + 1 === gameState.players.length)
     setTimeout(() => {
       dispatch({ type: ACTIONS.END_TURN });
     }, 2000);
@@ -133,5 +135,12 @@ function dealCards(requests) {
 export function restartGame() {
   return dispatch => {
     dispatch({ type: ACTIONS.RESTART_GAME });
+  };
+}
+
+export function clearError() {
+  console.log("err");
+  return dispatch => {
+    dispatch({ type: ACTIONS.CLEAR_NETWORK_ERROR });
   };
 }

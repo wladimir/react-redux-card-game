@@ -2,11 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Button from "../components/Button";
-import { startGame } from "../actions";
+import { startGame, clearError } from "../actions";
 import { Link } from "react-router-dom";
+import ErrorScreen from "../components/ErrorScreen";
 import "../assets/styles/StartScreen.css";
 
-export const StartScreen = ({ startGame }) => {
+export const StartScreen = ({ startGame, errorText, clearError }) => {
+  if (errorText)
+    return <ErrorScreen error={errorText} onClick={() => clearError()} />;
+
   return (
     <React.Fragment>
       <div className="center">
@@ -25,15 +29,21 @@ export const StartScreen = ({ startGame }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  errorText: state.errorReducer.error
+});
+
 const mapDispatchToProps = dispatch => ({
-  startGame: playerCount => dispatch(startGame(playerCount))
+  startGame: playerCount => dispatch(startGame(playerCount)),
+  clearError: () => dispatch(clearError())
 });
 
 StartScreen.propTypes = {
-  startGame: PropTypes.func.isRequired
+  startGame: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(StartScreen);
