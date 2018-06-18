@@ -1,17 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import PlayerStats from "./PlayerStats";
 
-class Player extends Component {
-  render() {
-    return (
-      <div className={`player-base p${this.props.id + 1}`}>
-        <PlayerStats name={this.props.name} score={this.props.score} />
-        <div className="cards">{this.props.cards}</div>
-      </div>
-    );
-  }
-}
+const Player = ({ id, name, score, cards }) => (
+  <div className={`player-base p${id + 1}`}>
+    <PlayerStats name={name} score={score} />
+    <div className="cards">{cards}</div>
+  </div>
+);
 
 Player.propTypes = {
   id: PropTypes.number.isRequired,

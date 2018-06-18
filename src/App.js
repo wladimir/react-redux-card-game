@@ -6,13 +6,13 @@ import "./assets/styles/App.css";
 
 const App = () => (
   <BrowserRouter>
-    <div>
+    <React.Fragment>
       <Switch>
         <Route exact={true} path="/" component={StartScreen} />
         <Route path={"/game"} component={GameScreen} />
         <Redirect to="/" />
       </Switch>
-    </div>
+    </React.Fragment>
   </BrowserRouter>
 );
 

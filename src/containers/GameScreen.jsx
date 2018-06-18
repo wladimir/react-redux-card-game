@@ -127,12 +127,10 @@ const mapStateToProps = state => ({
   gameWinners: state.gameWinners
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    playCard: card => dispatch(playCard(card)),
-    restartGame: () => dispatch(restartGame())
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  playCard: card => dispatch(playCard(card)),
+  restartGame: () => dispatch(restartGame())
+});
 
 export default connect(
   mapStateToProps,

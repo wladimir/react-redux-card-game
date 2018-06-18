@@ -8,9 +8,9 @@ import "../assets/styles/StartScreen.css";
 
 export const StartScreen = ({ startGame }) => {
   return (
-    <div>
+    <React.Fragment>
       <div className="center">
-        <div className="intro-text">Select number of players</div>
+        <p className="intro-text">Select number of players</p>
         <Link to="/game">
           <Button text={"2 players"} onClick={() => startGame(2)} />
         </Link>
@@ -21,15 +21,13 @@ export const StartScreen = ({ startGame }) => {
           <Button text={"4 players"} onClick={() => startGame(4)} />
         </Link>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    startGame: playerCount => dispatch(startGame(playerCount))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  startGame: playerCount => dispatch(startGame(playerCount))
+});
 
 StartScreen.propTypes = {
   startGame: PropTypes.func.isRequired
