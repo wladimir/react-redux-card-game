@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Player from "../components/Player";
 import Card from "../components/Card";
-import { playCard } from "../actions";
+import { playCard, restartGame } from "../actions";
 import cardBg from "../assets/images/card_background.jpg";
 import Loader from "../components/Loader";
 import { GAME_STATUS } from "../constants";
 import { Redirect } from "react-router-dom";
 import WinScreen from "../components/WinScreen";
-import { restartGame } from "../actions";
 import "../assets/styles/GameScreen.css";
 
 class GameScreen extends Component {
@@ -39,6 +38,7 @@ class GameScreen extends Component {
       }).isRequired
     ),
 
+    activePlayer: PropTypes.number.isRequired,
     playedCards: PropTypes.array.isRequired,
     playCard: PropTypes.func.isRequired,
     gameWinners: PropTypes.object.isRequired,
@@ -74,6 +74,7 @@ class GameScreen extends Component {
         id={player.id}
         name={player.name}
         score={player.score}
+        activePlayer={this.props.activePlayer}
         cards={player.cards.filter(card => !card.isPlayed).map(card => (
           <Card
             key={card.code}
@@ -94,6 +95,15 @@ class GameScreen extends Component {
     ));
   }
 
+  renderWinners() {
+    return Object.keys(this.props.gameWinners).length > 0 ? (
+      <WinScreen
+        gameWinners={this.props.gameWinners}
+        onClick={this.props.restartGame}
+      />
+    ) : null;
+  }
+
   render() {
     if (this.props.gameStatus === GAME_STATUS.NOT_STARTED)
       return <Redirect to="/" />;
@@ -101,14 +111,7 @@ class GameScreen extends Component {
 
     return (
       <div className="game-screen">
-        <div>
-          {Object.keys(this.props.gameWinners).length > 0 && (
-            <WinScreen
-              gameWinners={this.props.gameWinners}
-              onClick={this.props.restartGame}
-            />
-          )}
-        </div>
+        <div>{this.renderWinners()}</div>
         <div className="played-cards center">
           <ul>{this.createCards(this.props.playedCards)}</ul>
         </div>
@@ -124,7 +127,8 @@ const mapStateToProps = state => ({
   currentPlayer: state.gameReducer.currentPlayer,
   currentRound: state.gameReducer.currentRound,
   playedCards: state.gameReducer.playedCards,
-  gameWinners: state.gameReducer.gameWinners
+  gameWinners: state.gameReducer.gameWinners,
+  activePlayer: state.gameReducer.activePlayer
 });
 
 const mapDispatchToProps = dispatch => ({

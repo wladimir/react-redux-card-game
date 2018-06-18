@@ -6,7 +6,8 @@ const initialState = {
   playedCards: [],
   playAllowed: true,
   round: 0,
-  gameWinners: {}
+  gameWinners: {},
+  activePlayer: 0
 };
 
 function gameReducer(state = initialState, action) {
@@ -28,7 +29,8 @@ function gameReducer(state = initialState, action) {
         ...state,
         playedCards: [...state.playedCards, state.players[player].cards[card]],
         ...(state.players[player].cards[card].isPlayed = true),
-        playAllowed: false
+        playAllowed: false,
+        activePlayer: player
       };
 
     case ACTIONS.END_TURN:
@@ -65,7 +67,8 @@ function gameReducer(state = initialState, action) {
         playedCards: [],
         ...(state.players[winner].score += points),
         playAllowed: true,
-        round: state.round + 1
+        round: state.round + 1,
+        activePlayer: 0
       };
 
       if (state.round + 1 === NUMBER_OF_CARDS) {

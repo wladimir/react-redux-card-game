@@ -97,6 +97,10 @@
   font-size: 1.5em;
 }
 
+.highlight{
+  color:yellow
+}
+
 .player-score {
   font-family: "Trebuchet MS";
 }

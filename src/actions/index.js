@@ -92,7 +92,7 @@ export function playCard(card) {
 
 // natural looking thinking time between plays
 function getRandomPlaytime(index) {
-  return 100 * Math.floor((Math.random() + 1) * 2) * index;
+  return 300 * Math.floor((Math.random() + 1) * 2) * index;
 }
 
 function playOpponent(gameState, player, dispatch) {

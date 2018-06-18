@@ -40,7 +40,8 @@ const mapDispatchToProps = dispatch => ({
 
 StartScreen.propTypes = {
   startGame: PropTypes.func.isRequired,
-  error: PropTypes.string
+  errorText: PropTypes.string,
+  clearError: PropTypes.func
 };
 
 export default connect(
