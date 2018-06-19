@@ -110,14 +110,11 @@ function playOpponent(getState, player, dispatch) {
     card: randomCard.index
   });
 
-  if (player + 1 === currentState.players.length) {
-    const nextState = getState().gameReducer;
-    endTurn(nextState, dispatch);
-  }
+  if (player + 1 === currentState.players.length) endTurn(getState, dispatch);
 }
 
-function endTurn(state, dispatch) {
-  const { playedCards, players, round } = state;
+function endTurn(getState, dispatch) {
+  const { playedCards, players } = getState().gameReducer;
 
   const winningCards = getWinningCards(playedCards);
 
@@ -129,14 +126,33 @@ function endTurn(state, dispatch) {
 
   const points = playedCards.map(card => card.value).reduce((a, b) => a + b, 0);
 
-  const payload = { winner, points, gameWinners: {} };
-
-  if (round + 1 === NUMBER_OF_CARDS)
-    payload.gameWinners = getGameWinners(state);
-
   setTimeout(() => {
-    dispatch({ type: ACTIONS.END_TURN, payload });
+    dispatch({ type: ACTIONS.END_TURN, winner, points });
+
+    getGameWinners(getState, dispatch);
   }, 2000);
+}
+
+function getGameWinners(getState, dispatch) {
+  const { players, round } = getState().gameReducer;
+
+  if (round === NUMBER_OF_CARDS) {
+    const maxPointsIndex = players
+      .map(player => player.score)
+      .reduce((max, x, i, players) => (x > players[max] ? i : max), 0);
+
+    const winners = players.filter(
+      player => player.score === players[maxPointsIndex].score
+    );
+
+    dispatch({
+      type: ACTIONS.GET_GAME_WINNERS,
+      gameWinners: {
+        names: winners.map(winner => winner.name),
+        score: players[maxPointsIndex].score
+      }
+    });
+  }
 }
 
 function getWinningCards(playedCards) {
@@ -147,21 +163,6 @@ function getWinningCards(playedCards) {
   return playedCards.filter(
     card => card.value === playedCards[maxValueIndex].value
   );
-}
-
-function getGameWinners(state) {
-  const maxPointsIndex = state.players
-    .map(player => player.score)
-    .reduce((max, x, i, players) => (x > players[max] ? i : max), 0);
-
-  const winners = state.players.filter(
-    player => player.score === state.players[maxPointsIndex].score
-  );
-
-  return {
-    names: winners.map(winner => winner.name),
-    score: state.players[maxPointsIndex].score
-  };
 }
 
 function getDeck() {

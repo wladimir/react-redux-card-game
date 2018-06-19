@@ -34,7 +34,7 @@ function gameReducer(state = initialState, action) {
       };
 
     case ACTIONS.END_TURN:
-      const { winner, points, gameWinners } = action.payload;
+      const { winner, points } = action;
 
       return {
         ...state,
@@ -42,8 +42,15 @@ function gameReducer(state = initialState, action) {
         ...(state.players[winner].score += points),
         playAllowed: true,
         round: state.round + 1,
-        activePlayer: 0,
-        gameWinners: gameWinners
+        activePlayer: 0
+      };
+
+    case ACTIONS.GET_GAME_WINNERS:
+      const { gameWinners } = action;
+
+      return {
+        ...state,
+        gameWinners
       };
 
     case ACTIONS.RESTART_GAME:
