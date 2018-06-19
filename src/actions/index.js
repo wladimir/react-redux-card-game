@@ -85,7 +85,7 @@ export function playCard(card) {
 
     for (let i = 1; i < playerCount; i++)
       setTimeout(() => {
-        playOpponent(gameState, i, dispatch);
+        playOpponent(getState, i, dispatch);
       }, getRandomPlaytime(i));
   };
 }
@@ -95,8 +95,9 @@ function getRandomPlaytime(index) {
   return 300 * Math.floor((Math.random() + 1) * 2) * index;
 }
 
-function playOpponent(gameState, player, dispatch) {
-  const unplayedCards = gameState.players[player].cards.filter(
+function playOpponent(getState, player, dispatch) {
+  const currentState = getState().gameReducer;
+  const unplayedCards = currentState.players[player].cards.filter(
     card => !card.isPlayed
   );
 
@@ -109,10 +110,58 @@ function playOpponent(gameState, player, dispatch) {
     card: randomCard.index
   });
 
-  if (player + 1 === gameState.players.length)
-    setTimeout(() => {
-      dispatch({ type: ACTIONS.END_TURN });
-    }, 2000);
+  if (player + 1 === currentState.players.length) {
+    const nextState = getState().gameReducer;
+    endTurn(nextState, dispatch);
+  }
+}
+
+function endTurn(state, dispatch) {
+  const { playedCards, players, round } = state;
+
+  const winningCards = getWinningCards(playedCards);
+
+  let winner = -1;
+  players.forEach((player, index) => {
+    const match = player.cards.find(card => winningCards.indexOf(card) >= 0);
+    if (match) winner = index;
+  });
+
+  const points = playedCards.map(card => card.value).reduce((a, b) => a + b, 0);
+
+  const payload = { winner, points, gameWinners: {} };
+
+  if (round + 1 === NUMBER_OF_CARDS)
+    payload.gameWinners = getGameWinners(state);
+
+  setTimeout(() => {
+    dispatch({ type: ACTIONS.END_TURN, payload });
+  }, 2000);
+}
+
+function getWinningCards(playedCards) {
+  const maxValueIndex = playedCards
+    .map(card => card.value)
+    .reduce((max, x, i, cards) => (x > cards[max] ? i : max), 0);
+
+  return playedCards.filter(
+    card => card.value === playedCards[maxValueIndex].value
+  );
+}
+
+function getGameWinners(state) {
+  const maxPointsIndex = state.players
+    .map(player => player.score)
+    .reduce((max, x, i, players) => (x > players[max] ? i : max), 0);
+
+  const winners = state.players.filter(
+    player => player.score === state.players[maxPointsIndex].score
+  );
+
+  return {
+    names: winners.map(winner => winner.name),
+    score: state.players[maxPointsIndex].score
+  };
 }
 
 function getDeck() {
