@@ -47,11 +47,6 @@ class GameScreen extends Component {
     restartGame: PropTypes.func.isRequired
   };
 
-  componentDidMount() {
-    this.playedCards = this.createCards(this.props.playedCards);
-    this.players = this.createPlayers(this.props.players);
-  }
-
   createCards(playedCards) {
     return playedCards.map(card => (
       <li key={card.code}>
